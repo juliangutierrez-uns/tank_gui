@@ -53,3 +53,10 @@
 git clone https://github.com/juliangutierrez-uns/tank_gui.git
 cd tank-level-gui
 python Tank_Level_GUI.py
+```
+
+<p align="center">
+  <img src="img/logo_UNS.png" width="250"/>
+  <img src="img/logo_UFCG.png" width="250"/>
+  <img src="img/logo_UFBA.png" width="250"/>
+</p>
