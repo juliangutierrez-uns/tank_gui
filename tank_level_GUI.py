@@ -11,11 +11,11 @@ import simcentralconnect
 from tkinter import filedialog
 import os
 
-__version__ = "4.3"
+__version__ = "4.4"
 __author__ = "UNS-UFCG-UFBA"
 
 root = tk.Tk()
-root.withdraw()  # ocultar ventana mientras selecciona carpeta
+root.withdraw()
 
 # Pedir carpeta
 root_path = filedialog.askdirectory(title="Select the folder containing the project files")
@@ -24,32 +24,27 @@ if not root_path:
     root.destroy()
     exit()
 
-root.deiconify()  # mostrar la ventana luego de seleccionar carpeta
+root.deiconify()
 
-
-# Construcción de rutas dinámicas
-simPath = os.path.join(root_path, "MW2-Tank_python.simx")
+# Rutas
+simPath = os.path.join(root_path, "model\\MW2-Tank_python.simx")
 simName = "MW2-Tank_python"
 
 logo_paths = {
-    "uns": os.path.join(root_path, "logo_UNS.png"),
-    "ufcg": os.path.join(root_path, "logo_UFCG.png"),
-    "ufba": os.path.join(root_path, "logo_UFBA.png")
+    "uns": os.path.join(root_path, "img\\logo_UNS.png"),
+    "ufcg": os.path.join(root_path, "img\\logo_UFCG.png"),
+    "ufba": os.path.join(root_path, "img\\logo_UFBA.png")
 }
 
-model_image_path = os.path.join(root_path, "model.png")
+model_image_path = os.path.join(root_path, "img\\model.png")
 
-
-# Connect to SimCentral
+# Conexión
 sc = simcentralconnect.connect().Result
 sc.SetOptions(repr({'EnableApiLogging': 'false'}))
 
 sm  = sc.GetService("ISimulationManager")
 vm  = sc.GetService("IVariableManager")
 snm = sc.GetService("ISnapshotManager")
-osm = sc.GetService("IOptimizationSetManager")
-scm = sc.GetService("IScenarioManager")
-
 
 sm.DeleteSim(simName).Result
 sm.ImportSim(simPath).Result
@@ -59,7 +54,7 @@ sm.UpdateSimulationMode(simName,"FluidFlow").Result
 sm.UpdateSimulationMode(simName,"Dynamics").Result
 snm.RevertSnapshot(simName,"Dyn 2").Result
 
-# Global variables and data lists
+# Variables globales
 simulacion_activa = False
 sp_data = []
 nivel_tanque_data = []
@@ -69,7 +64,6 @@ PIDplot = []
 OPcplot = []
 tiempo_iter = 0
 
-# Initial control parameters
 erro_integral = 0
 iae_total = 0
 kc = 100
@@ -77,17 +71,37 @@ ti = 0.5
 tp = 0.1
 sp_actual = 0.5
 
-# Interface control
 def iniciar_simulacion():
-    global simulacion_activa, iae_total, erro_integral
+    global simulacion_activa
     simulacion_activa = True
-    iae_total = 0
-    erro_integral = 0
-    iae_var.set("0.00")
 
 def detener_simulacion():
     global simulacion_activa
     simulacion_activa = False
+
+def reset_simulacion():
+    global simulacion_activa, sp_data, nivel_tanque_data, tiempo_data, erroplot, PIDplot, OPcplot, tiempo_iter
+    global erro_integral, iae_total
+
+    detener_simulacion()
+    snm.RevertSnapshot(simName,"Dyn 2").Result
+
+    sp_data.clear()
+    nivel_tanque_data.clear()
+    tiempo_data.clear()
+    erroplot.clear()
+    PIDplot.clear()
+    OPcplot.clear()
+    tiempo_iter = 0
+    erro_integral = 0
+    iae_total = 0
+
+    iae_var.set("0.00")
+    nivel_var.set("0.00")
+
+    ax.clear()
+    canvas.draw()
+
 
 def salir():
     detener_simulacion()
@@ -149,13 +163,13 @@ def actualizar_grafico(_):
         ax.clear()
         ax.plot(tiempo_data, sp_data, label="Set Point (SP)", color='tab:blue')
         ax.plot(tiempo_data, nivel_tanque_data, label="Tank Level", color='tab:orange')
-        ax.fill_between(tiempo_data, sp_data, nivel_tanque_data, color='lightcoral', alpha=0.3, label="IAE Area")
+        ax.fill_between(tiempo_data, sp_data, nivel_tanque_data, color='lightcoral', alpha=0.3, label="IAE")
         ax.set_xlabel("Time (s)")
         ax.set_ylabel("Level")
         ax.set_title("SP and Tank Level over Time")
         ax.legend()
 
-        window = 3600  # segundos visibles en el gráfico
+        window = 1800  # segundos visibles en el gráfico
         if tiempo_data:
             t_max = tiempo_data[-1]
             t_min = max(0, t_max - window)
@@ -232,6 +246,7 @@ frame_left.pack(side=tk.LEFT, fill="both", expand=True, padx=10, pady=10)
 
 tk.Button(frame_left, text="Start Simulation", font=('Arial', 10, 'bold'), bg="#3e1152", fg="white", command=iniciar_simulacion, width=20).pack(pady=2)
 tk.Button(frame_left, text="Stop Simulation", font=('Arial', 10, 'bold'), bg="#3e1152", fg="white", command=detener_simulacion, width=20).pack(pady=2)
+tk.Button(frame_left, text="Reset Simulation", font=('Arial', 10, 'bold'), bg="#3e1152", fg="white", command=reset_simulacion, width=20).pack(pady=2)
 
 tk.Label(frame_left, text="Set Point (SP):", font=('Arial', 10, 'bold'), bg="#3e1152", fg="white", width=20).pack(pady=(20,0))
 entry_sp = tk.Entry(frame_left)
@@ -292,3 +307,6 @@ def on_resize(event):
 root.bind("<Configure>", on_resize)
 root.protocol("WM_DELETE_WINDOW", quit_me)
 root.mainloop()
+
+
+
