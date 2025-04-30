@@ -1,0 +1,50 @@
+# 🛢️ Tank Level GUI
+
+**Tank Level GUI** es una interfaz gráfica de usuario (GUI) desarrollada en Python para la implementación de un controlador PI externo aplicado a un proceso dinámico simulado en AVEVA Process Simulation (APS). Esta herramienta permite la conexión en tiempo real con el entorno de simulación, facilitando el control y monitoreo de un sistema de nivel de tanque.
+
+---
+
+## 🧩 Características principales
+
+- Conexión directa con APS mediante la API `simcentralconnect` (basada en .NET Framework).
+- Importación automática del modelo dinámico.
+- Implementación de control proporcional-integral (PI) externo.
+- Visualización en tiempo real de variables clave como nivel, caudal y presión.
+- Modificación dinámica de parámetros de control y set points.
+- Cálculo de la acción de control respetando restricciones físicas.
+- Interfaz intuitiva construida con Tkinter.
+
+---
+
+## 🚀 Requisitos
+
+### Opción 1: Ejecutar directamente (recomendado para usuarios finales)
+- Ejecutar el archivo `Tank_Level_GUI_vX.X.exe` incluido en la release.
+
+### Opción 2: Ejecutar desde código (recomendado para desarrolladores)
+- Python 3.8 o superior
+- Dependencias:
+  - `simcentralconnect` (requiere entorno APS instalado)
+  - `tkinter` (incluido en la mayoría de instalaciones de Python)
+  - `.NET Framework` (para la interoperabilidad con APS)
+
+---
+
+## 🖼️ Capturas y demostración
+
+### 📷 Interfaz de usuario:
+
+![Interfaz](images/gui_screenshot.png)
+
+### 🎥 Video demostrativo:
+
+[![Video](images/video_thumbnail.png)](https://www.youtube.com/watch?v=LINK_AQUI)
+
+---
+
+## ⚙️ Instalación (modo desarrollador)
+
+```bash
+git clone https://github.com/usuario/tank-level-gui.git
+cd tank-level-gui
+python Tank_Level_GUI_v4.3.py
