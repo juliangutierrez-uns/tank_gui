@@ -19,21 +19,27 @@
 ## Requisitos
 
 ### Opción 1: Ejecutar directamente (recomendado para usuarios finales)
-- Ejecutar el archivo `Tank_Level_GUI_vX.X.exe` incluido en la release.
+- Ejecutar el archivo `Tank_Level_GUI.exe` incluido en la release.
 
 ### Opción 2: Ejecutar desde código (recomendado para desarrolladores)
 - Python 3.8 o superior
 - Dependencias:
   - `simcentralconnect` (requiere entorno APS instalado)
-  - `tkinter` (incluido en la mayoría de instalaciones de Python)
+  - `tkinter` 
+  - `PIL` 
+  - `matplotlib` 
 
 ---
 
 ## Capturas y demostración
 
-### Interfaz de usuario:
+### Modelo del tanque
 
 ![Interfaz](img/model.png)
+
+### Interfaz de usuario:
+
+![Interfaz](img/GUI.png)
 
 ### Video demostrativo:
 
