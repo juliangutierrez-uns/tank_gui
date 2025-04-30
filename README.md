@@ -9,7 +9,7 @@
 - Conexión directa con APS mediante la API `simcentralconnect` (basada en .NET Framework).
 - Importación automática del modelo dinámico.
 - Implementación de control proporcional-integral (PI) externo.
-- Visualización en tiempo real de variables clave como nivel, caudal y presión.
+- Visualización en tiempo real.
 - Modificación dinámica de parámetros de control y set points.
 - Cálculo de la acción de control respetando restricciones físicas.
 - Interfaz intuitiva construida con Tkinter.
@@ -18,8 +18,10 @@
 
 ## Requisitos
 
+⚠️ Importante: Antes de ejecutar la GUI, asegurate de tener AVEVA Process Simulation (APS) abierto.
+
 ### Opción 1: Ejecutar directamente (recomendado para usuarios finales)
-- Ejecutar el archivo `Tank_Level_GUI.exe` incluido en la release.
+- Ejecutar el archivo que se encuentra en `tank_gui/dist/Tank_Level_GUI.exe`.
 
 ### Opción 2: Ejecutar desde código (recomendado para desarrolladores)
 - Python 3.8 o superior
@@ -51,8 +53,8 @@
 
 ```bash
 git clone https://github.com/juliangutierrez-uns/tank_gui.git
-cd tank-level-gui
-python Tank_Level_GUI.py
+cd tank_gui
+python tank_level_GUI.py
 ```
 
 <p align="center">
