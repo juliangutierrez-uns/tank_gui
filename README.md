@@ -45,7 +45,7 @@
 
 ### Video demostrativo:
 
-[![Video](images/video_thumbnail.png)](https://www.youtube.com/watch?v=LINK_AQUI)
+[![Video](images/video_thumbnail.png)](https://drive.google.com/file/d/1snNpj4B_RYCbjUfh1EAGElN0usjRE002/view?usp=sharing)
 
 ---
 
